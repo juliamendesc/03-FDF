@@ -1,3 +1,7 @@
+#ifndef FDF_H
+
+#define FDF_H
+
 #include <stdio.h>
 #include <mlx.h>
 #include <math.h>
@@ -8,7 +12,8 @@
 #include "../libft/includes/get_next_line.h"
 
 #define MAX(a, b) (a > b ? a : b)
-
+#define WIDTH 1600
+#define HEIGHT 1400
 typedef struct s_coordinates
 {
 	int width;
@@ -43,3 +48,7 @@ void draw_line(float x, float y, float x1, float y1, t_coordinates *coord, t_pro
 int press_key(int key, void *data);
 void draw_map(t_coordinates *coord, t_program *img);
 void isometric_projection(float *x, float *y, int z);
+t_program *init_program(void);
+t_coordinates *init_coordinates(void);
+
+#endif

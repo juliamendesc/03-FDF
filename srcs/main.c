@@ -14,13 +14,42 @@ int press_key(int key, void *data)
 	return (0);
 }
 
+t_program *init_program(void)
+{
+	t_program *data;
+
+	data = (t_program *)malloc(sizeof(t_program));
+	if (!data)
+		ft_puterror("Error: malloc failed at init program\n", -1);
+	data->mlx_pointer = mlx_init();
+	data->mlx_win = mlx_new_window(data->mlx_pointer, 1000, 1000, "FDF");
+	data->img = mlx_new_image(data->mlx_pointer, 1000, 1000);
+	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
+	return (data);
+}
+
+t_coordinates *init_coordinates(void)
+{
+	t_coordinates *coord;
+
+	coord = (t_coordinates *)malloc(sizeof(t_coordinates));
+	if (!coord)
+		ft_puterror("Error: malloc failed at init coordinates\n", -1);
+	coord->z_matrix = NULL;
+	coord->height = 0;
+	coord->width = 0;
+	coord->zoom = 20;
+	coord->color = 0xFFFFFF;
+	return (coord);
+}
+
 int main(int argc, char **argv)
 {
 	t_program *mlx;
 	t_coordinates *coord;
 
-	mlx = (t_program *)malloc(sizeof(t_program));
-	coord = (t_coordinates *)malloc(sizeof(t_coordinates));
+	mlx = init_program();
+	coord = init_coordinates();
 	read_file(*++argv, coord);
 	mlx->mlx_pointer = mlx_init();
 	mlx->mlx_win = mlx_new_window(mlx->mlx_pointer, 1600, 1400, "FDF");
