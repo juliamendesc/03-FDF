@@ -6,7 +6,7 @@ void isometric_projection(float *x, float *y, int z)
 	*y = (*x + *y) * sin(0.8) + z;
 }
 
-void draw_line(float x, float y, float x1, float y1, t_coordinates *coord, t_data *img)
+void draw_line(float x, float y, float x1, float y1, t_coordinates *coord, t_program *img)
 {
 	float x_step;
 	float y_step;
@@ -43,7 +43,7 @@ void draw_line(float x, float y, float x1, float y1, t_coordinates *coord, t_dat
 	printf("AFTER LINE DRAW x=%f, y=%f, x1=%f, y1=%f\n", x, y, x1, y1);
 }
 
-void draw_map(t_coordinates *coord, t_data *img)
+void draw_map(t_coordinates *coord, t_program *img)
 {
 	int x;
 	int y;
