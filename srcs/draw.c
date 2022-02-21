@@ -45,21 +45,29 @@ void draw_line(float x, float y, float x1, float y1, t_coordinates *coord, t_pro
 
 void draw_map(t_coordinates *coord, t_program *img)
 {
-	int x;
-	int y;
+	t_point m0;
+	t_point m1;
 
-	y = 0;
-	while (y < coord->height)
+	m0.y = 0;
+	while (m0.y < coord->height)
 	{
-		x = 0;
-		while (x < coord->width)
+		m0.x = 0;
+		while (m0.x < coord->width)
 		{
-			if (x < coord->width - 1)
-				draw_line(x, y, x + 1, y, coord, img);
-			if (y < coord->height - 1)
-				draw_line(x, y, x, y + 1, coord, img);
-			x++;
+			if (m0.x < coord->width - 1)
+			{
+				m1.x = m0.x + 1;
+				m1.y = m0.y;
+				draw_line(m0.x, m0.y, m1.x, m1.y, coord, img);
+			}
+			if (m0.y < coord->height - 1)
+			{
+				m1.x = m0.x;
+				m1.y = m0.y + 1;
+				draw_line(m0.x, m0.y, m1.x, m1.y, coord, img);
+			}
+			m0.x++;
 		}
-		y++;
+		m0.y++;
 	}
 }

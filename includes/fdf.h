@@ -23,10 +23,13 @@ typedef struct s_coordinates
 	int color;
 } t_coordinates;
 
-typedef struct s_data
+typedef struct s_point
 {
-
-} t_data;
+	int x;
+	int y;
+	int z;
+	int color;
+} t_point;
 
 typedef struct s_program
 {
