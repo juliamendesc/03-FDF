@@ -39,7 +39,6 @@ t_coordinates *init_coordinates(void)
 	coord->height = 0;
 	coord->width = 0;
 	coord->zoom = 20;
-	coord->color = 0xFFFFFF;
 	return (coord);
 }
 
@@ -51,9 +50,6 @@ int main(int argc, char **argv)
 	mlx = init_program();
 	coord = init_coordinates();
 	read_file(*++argv, coord);
-	mlx->mlx_win = mlx_new_window(mlx->mlx_pointer, 1600, 1400, "FDF");
-	mlx->img = mlx_new_image(mlx->mlx_pointer, 1600, 1400);
-	mlx->addr = mlx_get_data_addr(mlx->img, &mlx->bits_per_pixel, &mlx->line_length, &mlx->endian);
 	coord->zoom = 20;
 	draw_map(coord, mlx);
 	mlx_put_image_to_window(mlx->mlx_pointer, mlx->mlx_win, mlx->img, 0, 0);
