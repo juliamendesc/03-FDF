@@ -28,8 +28,8 @@ void draw_line(float x, float y, float x1, float y1, t_coordinates *coord, t_dat
 		coord->color = 0xFFFFFFFF;
 	x_step = x1 - x;
 	y_step = y1 - y;
-	isometric_projection(&x, &y, z);
-	isometric_projection(&x1, &y1, z1);
+	// isometric_projection(&x, &y, z);
+	// isometric_projection(&x1, &y1, z1);
 	max = MAX(ft_abs_float(x_step), ft_abs_float(y_step));
 	x_step /= max;
 	y_step /= max;
@@ -38,8 +38,6 @@ void draw_line(float x, float y, float x1, float y1, t_coordinates *coord, t_dat
 		my_mlx_pixel_put(img, x, y, coord->color);
 		x += x_step;
 		y += y_step;
-		if (x >= 150 || y >= 75 || x < 0 || y < 0)
-			break;
 		printf("INSIDE LOOP x=%f, y=%f, x1=%f, y1=%f\n", x, y, x1, y1);
 	}
 	printf("AFTER LINE DRAW x=%f, y=%f, x1=%f, y1=%f\n", x, y, x1, y1);

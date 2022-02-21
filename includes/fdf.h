@@ -20,24 +20,25 @@ typedef struct s_coordinates
 
 typedef struct s_data
 {
-	void *img;
-	char *addr;
-	int bits_per_pixel;
-	int line_length;
-	int endian;
+
 } t_data;
 
 typedef struct s_program
 {
 	void *mlx_pointer;
 	void *mlx_win;
+	void *img;
+	char *addr;
+	int bits_per_pixel;
+	int line_length;
+	int endian;
 } t_program;
 
 void read_file(char *file_name, t_coordinates *coord);
 void fill_matrix(int *z_line, char *line);
 int get_width(char *file_name);
 int get_height(char *file_name);
-void my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void my_mlx_pixel_put(t_program *data, int x, int y, int color);
 void draw_line(float x, float y, float x1, float y1, t_coordinates *coord, t_data *img);
 int press_key(int key, void *data);
 void draw_map(t_coordinates *coord, t_data *img);
