@@ -50,8 +50,9 @@ int main(int argc, char **argv)
 	mlx = init_program();
 	coord = init_coordinates();
 	read_file(*++argv, coord);
-	coord->zoom = 20;
 	draw_map(coord, mlx);
-	mlx_put_image_to_window(mlx->mlx_pointer, mlx->mlx_win, mlx->img, 0, 0);
+	mlx_put_image_to_window(mlx->mlx_pointer, mlx->mlx_win, mlx->img, 100, 100);
+	mlx_key_hook(mlx->mlx_win, key_pressed, &mlx);
+	mlx_mouse_hook(mlx->mlx_win, mouse_clicked, &mlx);
 	mlx_loop(mlx->mlx_pointer);
 }
