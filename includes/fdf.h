@@ -64,9 +64,11 @@ void draw_line(t_point m0, t_point m1, t_coordinates *coord, t_program *img);
 int key_pressed(int keycode, t_program *mlx);
 int mouse_clicked(int button, int x, int y, t_program *mlx);
 void draw_map(t_coordinates *coord, t_program *img);
-void isometric_projection(t_point *m, t_program *mlx);
+void isometric_projection(t_point *m);
 t_program *init_program(void);
 t_coordinates *init_coordinates(void);
 t_point apply_zoom(t_point m, t_coordinates *coord);
+t_point apply_color(t_point m);
+t_point *init_zoom_color(t_point *m, t_coordinates *coord);
 
 #endif
