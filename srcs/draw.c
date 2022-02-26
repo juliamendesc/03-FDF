@@ -2,81 +2,69 @@
 
 void isometric_projection(t_point *m)
 {
-	m->x = (m->x - m->y) * cos(0.8);
-	m->y = (m->x + m->y) * sin(0.8) + m->z;
+	m->x = (m->x - m->y) * cos(0.53);
+	m->y = (m->x + m->y) * sin(0.53) + m->z;
+	m->x += WIDTH / 3;
+	m->y += 50;
 }
 
-t_point apply_zoom(t_point m, t_coordinates *coord)
+void my_mlx_pixel_put(t_program *data, int x, int y, int color)
 {
+	char *dst;
 
-	m.x = m.x * coord->zoom;
-	m.y = m.y * coord->zoom;
-	m.z = m.z * coord->zoom;
-	return (m);
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
-t_point apply_color(t_point m)
+void draw_line(t_point m0, t_point m1, t_program *mlx)
 {
-	if (m.z < 0)
-		m.color = 0xFF0000FF;
-	else if (m.z > 0)
-		m.color = 0x00FF00FF;
-	else
-		m.color = 0xFFFFFFFF;
-	return (m);
-}
-
-void draw_line(t_point m0, t_point m1, t_coordinates *coord, t_program *img)
-{
-	float x_step;
-	float y_step;
+	float diff_x;
+	float diff_y;
 	int max;
 
-	m0.z = coord->z_matrix[(int)m0.y][(int)m1.x];
-	m1.z = coord->z_matrix[(int)m1.y][(int)m1.x];
-
-	m0 = apply_zoom(m0, coord);
-	m1 = apply_zoom(m1, coord);
-
+	m0.z = mlx->z_matrix[(int)m0.y][(int)m1.x];
+	m1.z = mlx->z_matrix[(int)m1.y][(int)m1.x];
+	m0 = apply_zoom(m0, mlx);
+	m1 = apply_zoom(m1, mlx);
 	m0 = apply_color(m0);
 	m1 = apply_color(m1);
-	x_step = m1.x - m0.x;
-	y_step = m1.y - m0.y;
-	// isometric_projection(&m1);
-	// isometric_projection(&m0);
-	max = MAX(ft_abs_float(x_step), ft_abs_float(y_step));
-	x_step /= max;
-	y_step /= max;
+	isometric_projection(&m1);
+	isometric_projection(&m0);
+	diff_x = m1.x - m0.x;
+	diff_y = m1.y - m0.y;
+	max = MAX(ft_abs_float(diff_x), ft_abs_float(diff_y));
+	diff_x /= max;
+	diff_y /= max;
 	while ((int)(m0.x - m1.x) || (int)(m0.y - m1.y))
 	{
-		my_mlx_pixel_put(img, m0.x, m0.y, m0.color);
-		m0.x += x_step;
-		m0.y += y_step;
+		my_mlx_pixel_put(mlx, m0.x, m0.y, m0.color);
+		m0.x += diff_x;
+		m0.y += diff_y;
 	}
 }
 
-void draw_map(t_coordinates *coord, t_program *img)
+void draw_map(t_program *mlx)
 {
 	t_point m0;
 	t_point m1;
 
 	m0.y = 0;
-	while (m0.y < coord->height)
+	while (m0.y < mlx->height)
 	{
 		m0.x = 0;
-		while (m0.x < coord->width)
+		while (m0.x < mlx->width)
 		{
-			if (m0.x < coord->width - 1)
+			if (m0.x < mlx->width - 1)
 			{
 				m1.x = m0.x + 1;
 				m1.y = m0.y;
-				draw_line(m0, m1, coord, img);
+				draw_line(m0, m1, mlx);
 			}
-			if (m0.y < coord->height - 1)
+			if (m0.y < mlx->height - 1)
 			{
 				m1.x = m0.x;
 				m1.y = m0.y + 1;
-				draw_line(m0, m1, coord, img);
+				draw_line(m0, m1, mlx);
 			}
 			m0.x++;
 		}

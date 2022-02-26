@@ -14,14 +14,10 @@
 #define MAX(a, b) (a > b ? a : b)
 #define WIDTH 1280
 #define HEIGHT 720
-typedef struct s_coordinates
-{
-	int width;
-	int height;
-	int **z_matrix;
-	int zoom;
-} t_coordinates;
-
+#define BUTTON_PRESS_MASK (1L << 2)
+#define BUTTON_RELEASE_MASK (1L << 3)
+#define KEY_ESCAPE 65307
+#define MOUSE_LEFT_BUTTON 1
 typedef struct s_point
 {
 	float x;
@@ -32,43 +28,45 @@ typedef struct s_point
 
 typedef struct s_program
 {
+	/* WINDOW */
 	void *mlx_pointer;
 	void *mlx_win;
+
+	/* IMAGE AND DRAW */
 	void *img;
 	char *addr;
 	int bits_per_pixel;
 	int line_length;
 	int endian;
+
+	/* COORDINATES */
+	int width;
+	int height;
+	int **z_matrix;
+	int zoom;
+	t_point *point;
 } t_program;
 
-typedef struct s_basis
-{
-	int scale;
-	int z_scale;
-	int shift_x;
-	int shift_y;
-	int is_isometric;
-	double angle;
-	int win_x;
-	int win_y;
-	void *mlx_ptr;
-	void *win_ptr;
-} t_basis;
+/* INIT STRUCTS */
+t_program *init_program(void);
+t_point apply_zoom(t_point m, t_program *coord);
+t_point apply_color(t_point m);
 
-void read_file(char *file_name, t_coordinates *coord);
-void fill_matrix(int *z_line, char *line);
-int get_width(char *file_name);
+/* FETCHING COORDINATES */
 int get_height(char *file_name);
-void my_mlx_pixel_put(t_program *data, int x, int y, int color);
-void draw_line(t_point m0, t_point m1, t_coordinates *coord, t_program *img);
+int get_width(char *file_name);
+void fill_matrix(int *z_line, char *line);
+void read_file(char *file_name, t_program *coord);
+
+/* HOOKS */
 int key_pressed(int keycode, t_program *mlx);
 int mouse_clicked(int button, int x, int y, t_program *mlx);
-void draw_map(t_coordinates *coord, t_program *img);
-void isometric_projection(t_point *m);
-t_program *init_program(void);
-t_coordinates *init_coordinates(void);
-t_point apply_zoom(t_point m, t_coordinates *coord);
-t_point apply_color(t_point m);
-t_point *init_zoom_color(t_point *m, t_coordinates *coord);
+
+/* DRAWING */
+void my_mlx_pixel_put(t_program *data, int x, int y, int color);
+void draw_line(t_point m0, t_point m1, t_program *mlx);
+void draw_map(t_program *img);
+void clear_mlx_data(void *ptr);
+void clear_matrix(void *ptr);
 
 #endif

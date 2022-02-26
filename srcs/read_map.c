@@ -1,6 +1,4 @@
 #include "../includes/fdf.h"
-#include "../libft/includes/libft.h"
-#include "../libft/includes/get_next_line.h"
 
 int get_height(char *file_name)
 {
@@ -15,6 +13,7 @@ int get_height(char *file_name)
 		height++;
 		free(line);
 	}
+	close(fd);
 	return (height);
 }
 
@@ -37,7 +36,7 @@ void fill_matrix(int *z_line, char *line)
 	char **numbers;
 	int i;
 
-	numbers = ft_strsplit(line, ' ');
+	numbers = ft_split(line, ' ');
 	i = 0;
 	while (numbers[i])
 	{
@@ -48,7 +47,7 @@ void fill_matrix(int *z_line, char *line)
 	free(numbers);
 }
 
-void read_file(char *file_name, t_coordinates *coord)
+void read_file(char *file_name, t_program *coord)
 {
 
 	int fd;
