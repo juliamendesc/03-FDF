@@ -13,6 +13,7 @@ int get_height(char *file_name)
 		height++;
 		free(line);
 	}
+	free(line);
 	close(fd);
 	return (height);
 }
@@ -49,7 +50,6 @@ void fill_matrix(int *z_line, char *line)
 
 void read_file(char *file_name, t_program *coord)
 {
-
 	int fd;
 	char *line;
 	int i;
@@ -58,7 +58,7 @@ void read_file(char *file_name, t_program *coord)
 	coord->width = get_width(file_name);
 	coord->z_matrix = (int **)malloc(sizeof(int *) * (coord->height + 1));
 	i = 0;
-	while (i <= coord->height)
+	while (i <= coord->height - 1)
 		coord->z_matrix[i++] = (int *)malloc(sizeof(int) * (coord->width + 1));
 	fd = open(file_name, O_RDONLY, 0);
 	i = 0;
@@ -68,5 +68,6 @@ void read_file(char *file_name, t_program *coord)
 		free(line);
 		i++;
 	}
+	free(line);
 	coord->z_matrix[i] = NULL;
 }

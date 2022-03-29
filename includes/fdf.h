@@ -59,7 +59,7 @@ void fill_matrix(int *z_line, char *line);
 void read_file(char *file_name, t_program *coord);
 
 /* HOOKS */
-int key_pressed(int keycode, t_program *mlx);
+int key_pressed(int keycode);
 int mouse_clicked(int button, int x, int y, t_program *mlx);
 
 /* DRAWING */

@@ -40,19 +40,12 @@ void clear_matrix(void *ptr)
 	free(coord);
 }
 
-int key_pressed(int keycode, t_program *mlx)
+int key_pressed(int keycode)
 {
 	printf("key code: %d\n", keycode);
 	if (keycode == KEY_ESCAPE) // ESC linux. MAC é 53
 	{
-		clear_mlx_data(mlx);
 		exit(0);
 	}
 	return (0);
 }
-
-// int mouse_clicked(int button, int x, int y, t_program *mlx)
-// {
-
-// 	return (0);
-// }
