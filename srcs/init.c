@@ -1,39 +1,45 @@
 #include "../includes/fdf.h"
 
-t_program *init_program(void)
+void init_program(t_program *data, char *file_name)
 {
-	t_program *data;
-
-	data = (t_program *)malloc(sizeof(t_program));
-	if (!data)
-		ft_puterror("Error: malloc failed at init program\n", -1);
 	data->mlx_pointer = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx_pointer, WIDTH, HEIGHT, "FDF");
 	data->img = mlx_new_image(data->mlx_pointer, WIDTH, HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
 	data->z_matrix = NULL;
-	data->height = 0;
-	data->width = -1;
-	data->zoom = 25;
-	return (data);
+	data->width = get_width(file_name);
+	data->height = get_height(file_name);
+	data->adapt_x = WIDTH / 3;
+	data->adapt_y = HEIGHT / 3;
+	data->angle = 0.54;
+	data->diagonal = ft_abs(sqrt(pow(data->height, 2) + pow(data->width, 2)));
+	data->scale = 20;
+	data->scale_height = 10;
+	data->scale_width = 10;
+	printf("mlx height before = %d\n", data->height);
+	printf("mlx width before= %d\n", data->width);
+	printf("scale before %f\n", data->scale);
+	printf("scale height before %f\n", data->scale_height);
+	printf("scale width before %f\n", data->scale_width);
+	printf("diagonal before %d\n", data->diagonal);
 }
 
-t_point apply_zoom(t_point m, t_program *coord)
+void apply_zoom(t_program *m0, t_program *m1, t_program *coord)
 {
-
-	m.x = m.x * coord->zoom;
-	m.y = m.y * coord->zoom;
-	m.z = m.z * coord->zoom;
-	return (m);
+	m0->x = m0->x * coord->scale;
+	m0->y = m0->y * coord->scale;
+	m0->z = m0->z * coord->scale;
+	m1->x = m1->x * coord->scale;
+	m1->y = m1->y * coord->scale;
+	m1->z = m1->z * coord->scale;
 }
 
-t_point apply_color(t_point m)
+int apply_color(t_program m0, t_program m1)
 {
-	if (m.z < 0)
-		m.color = 0xFF0000FF;
-	else if (m.z > 0)
-		m.color = 0x00FF00FF;
+	if (m0.z || m1.z)
+		return (0xfc0345);
+	if (m0.z != m1.z)
+		return (0xfc031c);
 	else
-		m.color = 0xFFFFFFFF;
-	return (m);
+		return (0xBBFAFF);
 }
