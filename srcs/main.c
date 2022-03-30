@@ -7,11 +7,11 @@ int main(int argc, char **argv)
 
 	if (argc == 2)
 	{
+		matrix = read_map(argv[1]);
 		mlx = (t_program *)malloc(sizeof(t_program));
 		if (!mlx)
 			ft_puterror("Error: malloc failed", -1);
-		init_program(mlx, argv[1]);
-		matrix = read_map(argv[1]);
+		init_program(&mlx, argv[1]);
 		draw_map(matrix, mlx);
 		mlx_put_image_to_window(mlx->mlx_pointer, mlx->mlx_win, mlx->img, 100, 100);
 		mlx_key_hook(mlx->mlx_win, key_pressed, &mlx);

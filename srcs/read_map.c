@@ -32,46 +32,6 @@ int get_width(char *file_name)
 	return (width);
 }
 
-// void fill_matrix(int *z_line, char *line)
-// {
-// 	char **numbers;
-// 	int i;
-
-// 	numbers = ft_split(line, ' ');
-// 	i = 0;
-// 	while (numbers[i])
-// 	{
-// 		z_line[i] = ft_atoi(numbers[i]);
-// 		free(numbers[i]);
-// 		i++;
-// 	}
-// 	free(numbers);
-// }
-
-// void read_file(char *file_name, t_program *coord)
-// {
-// 	int fd;
-// 	char *line;
-// 	int i;
-
-// 	coord->height = get_height(file_name);
-// 	coord->width = get_width(file_name);
-// 	coord->z_matrix = (int **)malloc(sizeof(int *) * (coord->height + 1));
-// 	i = 0;
-// 	while (i <= coord->height - 1)
-// 		coord->z_matrix[i++] = (int *)malloc(sizeof(int) * (coord->width + 1));
-// 	fd = open(file_name, O_RDONLY, 0);
-// 	i = 0;
-// 	while (get_next_line(fd, &line))
-// 	{
-// 		fill_matrix(coord->z_matrix[i], line);
-// 		free(line);
-// 		i++;
-// 	}
-// 	free(line);
-// 	coord->z_matrix[i] = NULL;
-// }
-
 int fill_matrix_lines(char *line, t_program **map_matrix, int y)
 {
 	char **points;

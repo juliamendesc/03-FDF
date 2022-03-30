@@ -54,10 +54,9 @@ typedef struct s_program
 } t_program;
 
 /* INIT STRUCTS */
-void init_program(t_program *data, char *file_name);
+void init_program(t_program **data, char *file_name);
 void apply_zoom(t_program *m0, t_program *m1, t_program *coord);
 int apply_color(t_program m0, t_program m1);
-void define_scale(t_program *mlx);
 
 /* FETCHING COORDINATES */
 int get_height(char *file_name);

@@ -44,9 +44,6 @@ void draw_line(t_program m0, t_program m1, t_program *mlx)
 
 void set_parameters(t_program *a, t_program *b, t_program *mlx)
 {
-	// mlx->scale_height = mlx->height / mlx->diagonal;
-	// mlx->scale_width = mlx->width / mlx->diagonal;
-	// mlx->scale = ft_min(mlx->scale_width, mlx->scale_height);
 	apply_zoom(a, b, mlx);
 	isometric_projection(a, mlx->angle);
 	isometric_projection(b, mlx->angle);

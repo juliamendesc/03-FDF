@@ -1,27 +1,27 @@
 #include "../includes/fdf.h"
 
-void init_program(t_program *data, char *file_name)
+void init_program(t_program **data, char *file_name)
 {
-	data->mlx_pointer = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx_pointer, WIDTH, HEIGHT, "FDF");
-	data->img = mlx_new_image(data->mlx_pointer, WIDTH, HEIGHT);
-	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
-	data->z_matrix = NULL;
-	data->width = get_width(file_name);
-	data->height = get_height(file_name);
-	data->adapt_x = WIDTH / 3;
-	data->adapt_y = HEIGHT / 3;
-	data->angle = 0.54;
-	data->diagonal = ft_abs(sqrt(pow(data->height, 2) + pow(data->width, 2)));
-	data->scale = 20;
-	data->scale_height = 10;
-	data->scale_width = 10;
-	printf("mlx height before = %d\n", data->height);
-	printf("mlx width before= %d\n", data->width);
-	printf("scale before %f\n", data->scale);
-	printf("scale height before %f\n", data->scale_height);
-	printf("scale width before %f\n", data->scale_width);
-	printf("diagonal before %d\n", data->diagonal);
+	(*data)->mlx_pointer = mlx_init();
+	(*data)->mlx_win = mlx_new_window((*data)->mlx_pointer, WIDTH, HEIGHT, "FDF");
+	(*data)->img = mlx_new_image((*data)->mlx_pointer, WIDTH, HEIGHT);
+	(*data)->addr = mlx_get_data_addr((*data)->img, &(*data)->bits_per_pixel, &(*data)->line_length, &(*data)->endian);
+	(*data)->z_matrix = NULL;
+	(*data)->width = get_width(file_name);
+	(*data)->height = get_height(file_name);
+	(*data)->adapt_x = WIDTH / 3;
+	(*data)->adapt_y = HEIGHT / 3;
+	(*data)->angle = 0.54;
+	(*data)->diagonal = ft_abs(sqrt(pow((*data)->height, 2) + pow((*data)->width, 2)));
+	(*data)->scale_height = (*data)->height / (*data)->diagonal;
+	(*data)->scale_width = (*data)->width / (*data)->diagonal;
+	(*data)->scale = ft_min((*data)->scale_width, (*data)->scale_height);
+	printf("mlx height before = %d\n", (*data)->height);
+	printf("mlx width before= %d\n", (*data)->width);
+	printf("scale before %f\n", (*data)->scale);
+	printf("scale height before %f\n", (*data)->scale_height);
+	printf("scale width before %f\n", (*data)->scale_width);
+	printf("diagonal before %d\n", (*data)->diagonal);
 }
 
 void apply_zoom(t_program *m0, t_program *m1, t_program *coord)
