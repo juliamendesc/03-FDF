@@ -14,17 +14,15 @@
 #define MAX(a, b) (a > b ? a : b)
 #define WIDTH 1280
 #define HEIGHT 720
-#define BUTTON_PRESS_MASK (1L << 2)
-#define BUTTON_RELEASE_MASK (1L << 3)
 #define KEY_ESCAPE 65307
-#define MOUSE_LEFT_BUTTON 1
+#define HEXADECIMAL_BASE "0123456789abcdef"
 typedef struct s_program
 {
 	/* POINT */
 	float x;
 	float y;
 	float z;
-	// int color;
+	int color;
 	int is_last_matrix_point;
 
 	/* WINDOW */
@@ -46,6 +44,9 @@ typedef struct s_program
 	double angle;
 	int adapt_x;
 	int adapt_y;
+	float zoom;
+	int is_z_above_30;
+	int is_z_above_20;
 
 	/* COORDINATES */
 	int width;
@@ -55,14 +56,16 @@ typedef struct s_program
 
 /* INIT STRUCTS */
 void init_program(t_program **data, char *file_name);
-void apply_zoom(t_program *m0, t_program *m1, t_program *coord);
-int apply_color(t_program m0, t_program m1);
+void zoom_in(t_program *m0, t_program *m1, t_program *mlx);
+void zoom_out(t_program *m0, t_program *m1, t_program *mlx);
+int apply_color(t_program m0, t_program m1, t_program *mlx);
 
 /* FETCHING COORDINATES */
 int get_height(char *file_name);
 int get_width(char *file_name);
 void fill_matrix(int *z_line, char *line);
 void read_file(char *file_name, t_program *coord);
+void check_z_to_get_zoom(t_program *point, t_program *mlx);
 
 /* HOOKS */
 int key_pressed(int keycode);
@@ -78,5 +81,6 @@ void set_parameters(t_program *a, t_program *b, t_program *mlx);
 
 t_program **read_map(char *file_name);
 int fill_matrix_lines(char *line, t_program **matrix_of_dots, int y);
+void check_malloc(void *ptr);
 
 #endif

@@ -13,7 +13,10 @@ void my_mlx_pixel_put(t_program *data, int x, int y, int color)
 	if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
 	{
 		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-		*(unsigned int *)dst = color;
+		if (data->color > 0)
+			*(unsigned int *)dst = data->color;
+		else
+			*(unsigned int *)dst = color;
 	}
 }
 
@@ -31,7 +34,7 @@ void draw_line(t_program m0, t_program m1, t_program *mlx)
 	diff_x /= max;
 	diff_y /= max;
 	color = 0;
-	color = apply_color(m0, m1);
+	color = apply_color(m0, m1, mlx);
 	while ((int)(m0.x - m1.x) || (int)(m0.y - m1.y))
 	{
 		my_mlx_pixel_put(mlx, m0.x, m0.y, color);
@@ -44,9 +47,18 @@ void draw_line(t_program m0, t_program m1, t_program *mlx)
 
 void set_parameters(t_program *a, t_program *b, t_program *mlx)
 {
-	apply_zoom(a, b, mlx);
+	check_z_to_get_zoom(a, mlx);
+	check_z_to_get_zoom(b, mlx);
+	if (mlx->is_z_above_30 || mlx->height > 30 || mlx->width > 30)
+		zoom_out(a, b, mlx);
+	else if (!mlx->is_z_above_30)
+		zoom_in(a, b, mlx);
 	isometric_projection(a, mlx->angle);
 	isometric_projection(b, mlx->angle);
+	a->x *= mlx->scale;
+	a->y *= mlx->scale;
+	b->x *= mlx->scale;
+	b->y *= mlx->scale;
 	a->x += mlx->adapt_x;
 	a->y += mlx->adapt_y;
 	b->x += mlx->adapt_x;

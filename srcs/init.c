@@ -9,39 +9,14 @@ void init_program(t_program **data, char *file_name)
 	(*data)->z_matrix = NULL;
 	(*data)->adapt_x = WIDTH / 3;
 	(*data)->adapt_y = HEIGHT / 3;
-	(*data)->angle = 0.54;
-
+	(*data)->angle = 0.523599;
 	(*data)->width = get_width(file_name);
 	(*data)->height = get_height(file_name);
+	(*data)->zoom = 2;
 	(*data)->diagonal = ft_abs(sqrt(pow((*data)->height, 2) + pow((*data)->width, 2)));
-
-	(*data)->scale_height = (float)(*data)->height / (*data)->diagonal;
-	(*data)->scale_width = (float)(*data)->width / (*data)->diagonal;
-	(*data)->scale = ft_min((float)(*data)->scale_width, (float)(*data)->scale_height);
-	printf("mlx height before = %d\n", (*data)->height);
-	printf("mlx width before= %d\n", (*data)->width);
-	printf("scale before %f\n", (*data)->scale);
-	printf("scale height before %f\n", (*data)->scale_height);
-	printf("scale width before %f\n", (*data)->scale_width);
-	printf("diagonal before %d\n", (*data)->diagonal);
-}
-
-void apply_zoom(t_program *m0, t_program *m1, t_program *coord)
-{
-	m0->x = m0->x * coord->scale;
-	m0->y = m0->y * coord->scale;
-	m0->z = m0->z * coord->scale;
-	m1->x = m1->x * coord->scale;
-	m1->y = m1->y * coord->scale;
-	m1->z = m1->z * coord->scale;
-}
-
-int apply_color(t_program m0, t_program m1)
-{
-	if (m0.z || m1.z)
-		return (0xfc0345);
-	if (m0.z != m1.z)
-		return (0xfc031c);
-	else
-		return (0xBBFAFF);
+	(*data)->scale_height = WIDTH / (*data)->height;
+	(*data)->scale_width = HEIGHT / (*data)->width;
+	(*data)->scale = ft_min((*data)->width, (*data)->height);
+	(*data)->is_z_above_30 = 0;
+	(*data)->is_z_above_20 = 0;
 }
