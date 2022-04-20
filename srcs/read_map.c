@@ -41,43 +41,20 @@ int fill_matrix_lines(char *line, t_program **map_matrix, int y)
 	char **points;
 	int x;
 
-	if (ft_strchr(line, ','))
+	points = ft_strsplit(line, ' ');
+	x = 0;
+	while (points[x])
 	{
-		points = ft_strsplit(line, ',');
-		x = 0;
-		while (points[x])
-		{
-			printf("in the loop\n");
-			map_matrix[y][x].z = ft_atoi(points[x]);
-			map_matrix[y][x].x = x;
-			map_matrix[y][x].y = y;
-			map_matrix[y][x].color = (ft_atoi_base(points[x], HEXADECIMAL_BASE));
-			printf("color = %d\n", map_matrix[y][x].color);
-			map_matrix[y][x].is_last_matrix_point = 0;
-			free(points[x++]);
-		}
-		free(points);
-		free(line);
-		map_matrix[y][--x].is_last_matrix_point = 1;
-		return (x);
+		map_matrix[y][x].z = ft_atoi(points[x]);
+		map_matrix[y][x].x = x;
+		map_matrix[y][x].y = y;
+		map_matrix[y][x].is_last_matrix_point = 0;
+		free(points[x++]);
 	}
-	else
-	{
-		points = ft_strsplit(line, ' ');
-		x = 0;
-		while (points[x])
-		{
-			map_matrix[y][x].z = ft_atoi(points[x]);
-			map_matrix[y][x].x = x;
-			map_matrix[y][x].y = y;
-			map_matrix[y][x].is_last_matrix_point = 0;
-			free(points[x++]);
-		}
-		free(points);
-		free(line);
-		map_matrix[y][--x].is_last_matrix_point = 1;
-		return (x);
-	}
+	free(points);
+	free(line);
+	map_matrix[y][--x].is_last_matrix_point = 1;
+	return (x);
 }
 
 t_program **create_coordinates_matrix(char *file_name)
