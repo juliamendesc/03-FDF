@@ -27,7 +27,8 @@ void draw_line(t_program m0, t_program m1, t_program *mlx)
 	float max;
 	int color;
 
-	set_parameters(&m0, &m1, mlx);
+	set_parameters(&m0, mlx);
+	set_parameters(&m1, mlx);
 	diff_x = m1.x - m0.x;
 	diff_y = m1.y - m0.y;
 	max = MAX(ft_abs_float(diff_x), ft_abs_float(diff_y));
@@ -45,24 +46,16 @@ void draw_line(t_program m0, t_program m1, t_program *mlx)
 	}
 }
 
-void set_parameters(t_program *a, t_program *b, t_program *mlx)
+void set_parameters(t_program *point, t_program *mlx)
 {
-	check_z_to_get_zoom(a, mlx);
-	check_z_to_get_zoom(b, mlx);
-	if (mlx->is_z_above_30 || mlx->height > 30 || mlx->width > 30)
-		zoom_out(a, b, mlx);
-	else if (!mlx->is_z_above_30)
-		zoom_in(a, b, mlx);
-	isometric_projection(a, mlx->angle);
-	isometric_projection(b, mlx->angle);
-	a->x *= mlx->scale;
-	a->y *= mlx->scale;
-	b->x *= mlx->scale;
-	b->y *= mlx->scale;
-	a->x += mlx->adapt_x;
-	a->y += mlx->adapt_y;
-	b->x += mlx->adapt_x;
-	b->y += mlx->adapt_y;
+	point->x *= mlx->zoom;
+	point->y *= mlx->zoom;
+	point->z *= mlx->zoom / mlx->scale;
+	point->x -= (mlx->width * mlx->zoom) / 2;
+	point->y -= (mlx->height * mlx->zoom) / 2;
+	// isometric_projection(point, mlx->angle);
+	point->x += (WIDTH / 2) + mlx->adapt_x;
+	point->y += (HEIGHT + mlx->height * mlx->zoom) / 2 + mlx->adapt_y;
 }
 
 void draw_map(t_program **coordinates_matrix, t_program *mlx)
@@ -86,4 +79,5 @@ void draw_map(t_program **coordinates_matrix, t_program *mlx)
 		}
 		y++;
 	}
+	mlx_put_image_to_window(mlx->mlx_pointer, mlx->mlx_win, mlx->img, 0, 0);
 }

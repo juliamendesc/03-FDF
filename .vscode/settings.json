@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    ".sequelizerc": "javascript",
+    ".prettierignore": "ignore",
+    ".lintstagedrc": "json",
+    ".env.*": "env",
+    "fdf.h": "c",
+    "libft.h": "c"
+  }
+}

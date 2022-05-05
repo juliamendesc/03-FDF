@@ -17,7 +17,7 @@ FDF				=	fdf
 
 CC				=	gcc
 
-CFLAGS			=	-fsanitize=address -Werror -Wextra -Wall -g
+CFLAGS			=	-fsanitize=address -fstack-protector -Werror -Wextra -Wall -g
 
 SRCS			=	./srcs/*.c
 
