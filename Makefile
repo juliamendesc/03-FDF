@@ -27,7 +27,7 @@ LIBFT_DIR		=	./libft
 
 INCLUDES	=	-I./includes -I$(LIBFT_DIR)
 
-INCLUDES_MAC	=	mlx_mac/libmlx.a
+INCLUDES_MAC	=	minilibmac/libmlx.a -lmlx
 
 INCLUDES_LINUX	=	-Lmlx_linux -lmlx_Linux -Imlx_linux
 
@@ -35,7 +35,7 @@ USE				=	-lmlx -framework OpenGL -framework AppKit -lm
 
 USE_LINUX		=	-lbsd -lmlx -lXext -lX11 -lm
 
-# Colors #
+# Colors #+
 GREEN		=	\e[38;5;118m
 YELLOW		=	\e[38;5;226m
 RESET		=	\e[0m
@@ -47,7 +47,7 @@ all:			$(FDF)
 $(NAME):		all
 
 $(FDF):		$(LIBFT) $(SRCS)
-			@make -C mlx_mac/ all
+			@make -C minilibmac/ all
 			@ $(CC) $(CFLAGS) $(SRCS) $(LIBFT) $(INCLUDES_MAC) $(USE) -o $(FDF)
 			@printf "$(GREEN)fdf created.\n"
 
@@ -69,7 +69,7 @@ cleanlinux:
 
 fclean:			clean
 				@make -C libft/ fclean
-				@make -C mlx_mac/ fclean
+				@make -C minilibmac/ fclean
 				@rm -rf $(NAME)
 				@printf "$(YELLOW)fdfremoved.\n"
 

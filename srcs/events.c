@@ -30,7 +30,6 @@ void clear_matrix(void *ptr)
 		i = 0;
 		while (i < coord->height)
 		{
-			printf("%ls\n", coord->z_matrix[i]);
 			free(coord->z_matrix[i]);
 			i++;
 		}
@@ -43,7 +42,7 @@ void clear_matrix(void *ptr)
 int key_pressed(int keycode)
 {
 	printf("key code: %d\n", keycode);
-	if (keycode == KEY_ESCAPE) // ESC linux. MAC é 53
+	if (keycode == 53) // ESC linux. MAC é 53
 	{
 		exit(0);
 	}
