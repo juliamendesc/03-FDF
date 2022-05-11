@@ -12,7 +12,8 @@ void init_program(t_program **data, char *file_name)
 	(*data)->angle = 0.523599;
 	(*data)->width = get_width(file_name);
 	(*data)->height = get_height(file_name);
-	(*data)->zoom = 2;
+	(*data)->zoom = FT_MIN(WIDTH / (*data)->width / 2,
+												 HEIGHT / (*data)->height / 2);
 	(*data)->diagonal = ft_abs(sqrt(pow((*data)->height, 2) + pow((*data)->width, 2)));
 	(*data)->scale_height = WIDTH / (*data)->height;
 	(*data)->scale_width = HEIGHT / (*data)->width;

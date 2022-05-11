@@ -10,12 +10,15 @@
 #include <fcntl.h>
 #include "../libft/includes/libft.h"
 #include "../libft/includes/get_next_line.h"
+#include "../libft/includes/get_next_line_fdf.h"
 
 #define MAX(a, b) (a > b ? a : b)
 #define WIDTH 1280
 #define HEIGHT 720
 #define KEY_ESCAPE 65307
 #define HEXADECIMAL_BASE "0123456789abcdef"
+#define FT_MIN(A, B) (((A) < (B)) ? (A) : (B))
+#define FT_ABS(X) (((X) < 0) ? (-(X)) : (X))
 typedef struct s_program
 {
 	/* POINT */
@@ -77,7 +80,7 @@ void draw_line(t_program m0, t_program m1, t_program *mlx);
 void draw_map(t_program **coordinates_matrix, t_program *mlx);
 void clear_mlx_data(void *ptr);
 void clear_matrix(void *ptr);
-void set_parameters(t_program *a, t_program *b, t_program *mlx);
+void set_parameters(t_program *point, t_program *mlx);
 
 t_program **read_map(char *file_name);
 int fill_matrix_lines(char *line, t_program **matrix_of_dots, int y);

@@ -16,10 +16,10 @@ void zoom_in(t_program *m0, t_program *m1, t_program *mlx)
 		mlx->zoom = (float)1;
 	m0->x *= mlx->zoom;
 	m0->y *= mlx->zoom;
-	m0->z *= mlx->zoom;
+	m0->z *= mlx->zoom / mlx->scale;
 	m1->x *= mlx->zoom;
 	m1->y *= mlx->zoom;
-	m1->z *= mlx->zoom;
+	m1->z *= mlx->zoom / mlx->scale;
 }
 
 void zoom_out(t_program *m0, t_program *m1, t_program *mlx)
