@@ -10,12 +10,15 @@
 #include <fcntl.h>
 #include "../libft/includes/libft.h"
 #include "../libft/includes/get_next_line.h"
+#include "../libft/includes/get_next_line_fdf.h"
 
 #define MAX(a, b) (a > b ? a : b)
 #define WIDTH 1280
 #define HEIGHT 720
 #define KEY_ESCAPE 65307
 #define HEXADECIMAL_BASE "0123456789abcdef"
+#define FT_MIN(A, B) (((A) < (B)) ? (A) : (B))
+#define FT_ABS(X) (((X) < 0) ? (-(X)) : (X))
 typedef struct s_program
 {
 	/* POINT */

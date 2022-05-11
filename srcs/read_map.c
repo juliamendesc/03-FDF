@@ -10,7 +10,7 @@ int get_height(char *file_name)
 	if (fd == -1)
 		ft_puterror("Error: open failed\n", -1);
 	height = 0;
-	while (get_next_line(fd, &line))
+	while ((line = get_next_line_fdf(fd)))
 	{
 		height++;
 		free(line);
@@ -29,7 +29,7 @@ int get_width(char *file_name)
 	fd = open(file_name, O_RDONLY, 0);
 	if (fd == -1)
 		ft_puterror("Error: open failed\n", -1);
-	get_next_line(fd, &line);
+	line = get_next_line_fdf(fd);
 	width = ft_wdcounter(line, ' ');
 	free(line);
 	close(fd);
@@ -85,7 +85,7 @@ t_program **read_map(char *file_name)
 	if (fd < 0)
 		ft_puterror("Error opening file", -1);
 	y = 0;
-	while (get_next_line(fd, &line) > 0)
+	while ((line = get_next_line_fdf(fd)))
 		fill_matrix_lines(line, coordinates_matrix, y++);
 	free(line);
 	coordinates_matrix[y] = NULL;

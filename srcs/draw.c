@@ -1,22 +1,27 @@
 #include "../includes/fdf.h"
 
-void isometric_projection(t_program *point, double angle)
+static void isometric_projection(float *x, float *y, int z)
 {
-	point->x = ((point->x - point->y) * cos(angle));
-	point->y = ((point->x + point->y) * sin(angle) - point->z);
+	int previous_x;
+	int previous_y;
+
+	previous_x = *x;
+	previous_y = *y;
+	*x = (previous_x - previous_y) * cos(0.523599);
+	*y = -z + (previous_x + previous_y) * sin(0.523599);
 }
 
 void my_mlx_pixel_put(t_program *data, int x, int y, int color)
 {
-	char *dst;
+	char *pixel;
 
 	if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
 	{
-		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		pixel = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 		if (data->color > 0)
-			*(unsigned int *)dst = data->color;
+			*(unsigned int *)pixel = data->color;
 		else
-			*(unsigned int *)dst = color;
+			*(unsigned int *)pixel = color;
 	}
 }
 
@@ -26,9 +31,8 @@ void draw_line(t_program m0, t_program m1, t_program *mlx)
 	float diff_y;
 	float max;
 	int color;
+	t_program m;
 
-	set_parameters(&m0, mlx);
-	set_parameters(&m1, mlx);
 	diff_x = m1.x - m0.x;
 	diff_y = m1.y - m0.y;
 	max = MAX(ft_abs_float(diff_x), ft_abs_float(diff_y));
@@ -36,26 +40,26 @@ void draw_line(t_program m0, t_program m1, t_program *mlx)
 	diff_y /= max;
 	color = 0;
 	color = apply_color(m0, m1, mlx);
-	while ((int)(m0.x - m1.x) || (int)(m0.y - m1.y))
+	m = m0;
+	while ((int)(m.x - m1.x) || (int)(m.y - m1.y))
 	{
-		my_mlx_pixel_put(mlx, m0.x, m0.y, color);
-		m0.x += diff_x;
-		m0.y += diff_y;
-		if (m0.x < 0 || m0.x > WIDTH || m0.y < 0 || m0.y > HEIGHT)
-			break;
+		my_mlx_pixel_put(mlx, m.x, m.y, color);
+		m.x += diff_x;
+		m.y += diff_y;
 	}
 }
 
-void set_parameters(t_program *point, t_program *mlx)
+t_program project(t_program p, t_program *mlx)
 {
-	point->x *= mlx->zoom;
-	point->y *= mlx->zoom;
-	point->z *= mlx->zoom / mlx->scale;
-	point->x -= (mlx->width * mlx->zoom) / 2;
-	point->y -= (mlx->height * mlx->zoom) / 2;
-	// isometric_projection(point, mlx->angle);
-	point->x += (WIDTH / 2) + mlx->adapt_x;
-	point->y += (HEIGHT + mlx->height * mlx->zoom) / 2 + mlx->adapt_y;
+	p.x *= mlx->zoom;
+	p.y *= mlx->zoom;
+	p.z *= mlx->zoom / mlx->scale;
+	p.x -= mlx->width * mlx->zoom / 2;
+	p.y -= mlx->height * mlx->zoom / 3;
+	isometric_projection(&p.x, &p.y, p.z);
+	p.x += (WIDTH) / 2;
+	p.y += (HEIGHT + mlx->height * mlx->zoom) / 3;
+	return (p);
 }
 
 void draw_map(t_program **coordinates_matrix, t_program *mlx)
@@ -64,17 +68,15 @@ void draw_map(t_program **coordinates_matrix, t_program *mlx)
 	int y;
 
 	y = 0;
-	while (coordinates_matrix[y])
+	while (y < mlx->height)
 	{
 		x = 0;
-		while (1)
+		while (x < mlx->width)
 		{
-			if (coordinates_matrix[y + 1])
-				draw_line(coordinates_matrix[y][x], coordinates_matrix[y + 1][x], mlx);
-			if (!coordinates_matrix[y][x].is_last_matrix_point)
-				draw_line(coordinates_matrix[y][x], coordinates_matrix[y][x + 1], mlx);
-			if (coordinates_matrix[y][x].is_last_matrix_point)
-				break;
+			if (y != mlx->height - 1)
+				draw_line(project(coordinates_matrix[y][x], mlx), project(coordinates_matrix[y + 1][x], mlx), mlx);
+			if (x != mlx->width - 1)
+				draw_line(project(coordinates_matrix[y][x], mlx), project(coordinates_matrix[y][x + 1], mlx), mlx);
 			x++;
 		}
 		y++;
