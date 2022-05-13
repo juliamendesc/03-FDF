@@ -48,12 +48,10 @@ int fill_matrix_lines(char *line, t_program **map_matrix, int y)
 		map_matrix[y][x].z = ft_atoi(points[x]);
 		map_matrix[y][x].x = x;
 		map_matrix[y][x].y = y;
-		map_matrix[y][x].is_last_matrix_point = 0;
 		free(points[x++]);
 	}
 	free(points);
 	free(line);
-	map_matrix[y][--x].is_last_matrix_point = 1;
 	return (x);
 }
 
