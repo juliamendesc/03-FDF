@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/13 20:41:42 by julcarva          #+#    #+#             */
+/*   Updated: 2022/05/13 22:14:14 by julcarva         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fdf.h"
 
-int key_press(int keycode, void *param)
+int	key_press(int keycode, void *param)
 {
-	t_program *fdf;
+	t_program	*fdf;
 
 	fdf = (t_program *)param;
 	printf("key code: %d\n", keycode);
@@ -18,27 +30,25 @@ int key_press(int keycode, void *param)
 	return (0);
 }
 
-int leave(void)
+int	leave(void)
 {
 	exit(0);
 }
 
-void zoom(int keycode, t_program *fdf)
+void	zoom(int keycode, t_program *fdf)
 {
 	if (keycode == 69 || keycode == 43)
 	{
 		fdf->zoom++;
-		printf("zoom: %f\n", fdf->zoom);
 	}
 	else if (keycode == 78 || keycode == 45)
 		fdf->zoom--;
 	if (fdf->zoom < 1)
-		fdf->zoom = 1;
-	mlx_clear_window(fdf->mlx_pointer, fdf->mlx_win);
+		fdf->zoom = 2;
 	draw_map(fdf);
 }
 
-void move(int keycode, t_program *data)
+void	move(int keycode, t_program *data)
 {
 	if (keycode == 65362 || keycode == 126)
 		data->adapt_y -= 10;
@@ -51,11 +61,12 @@ void move(int keycode, t_program *data)
 	reset_window(data);
 }
 
-void events(t_program *fdf)
+void	events(t_program *fdf)
 {
 	while (1)
 	{
 		mlx_key_hook(fdf->mlx_win, key_press, fdf);
+		mlx_hook(fdf->mlx_win, 17, 0, leave, fdf);
 		mlx_loop(fdf->mlx_pointer);
 	}
 }

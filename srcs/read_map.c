@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/13 20:42:40 by julcarva          #+#    #+#             */
+/*   Updated: 2022/05/13 21:58:40 by julcarva         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fdf.h"
 
-int get_height(char *file_name)
+int	get_height(char *file_name)
 {
-	int fd;
-	int height;
-	char *line;
+	int		fd;
+	int		height;
+	char	*line;
 
 	fd = open(file_name, O_RDONLY, 0);
 	if (fd == -1)
 		ft_puterror("Error: open failed\n", -1);
 	height = 0;
-	while ((line = get_next_line_fdf(fd)))
+	while ((line = get_next_line_fdf(fd)) != NULL)
 	{
 		height++;
 		free(line);
@@ -20,11 +32,11 @@ int get_height(char *file_name)
 	return (height);
 }
 
-int get_width(char *file_name)
+int	get_width(char *file_name)
 {
-	int fd;
-	int width;
-	char *line;
+	int		fd;
+	int		width;
+	char	*line;
 
 	fd = open(file_name, O_RDONLY, 0);
 	if (fd == -1)
@@ -36,10 +48,10 @@ int get_width(char *file_name)
 	return (width);
 }
 
-int fill_matrix_lines(char *line, t_program **map_matrix, int y)
+int	fill_matrix_lines(char *line, t_program **map_matrix, int y)
 {
-	char **points;
-	int x;
+	char	**points;
+	int		x;
 
 	points = ft_strsplit(line, ' ');
 	x = 0;
@@ -55,11 +67,11 @@ int fill_matrix_lines(char *line, t_program **map_matrix, int y)
 	return (x);
 }
 
-t_program **create_coordinates_matrix(char *file_name)
+t_program	**create_coordinates_matrix(char *file_name)
 {
-	t_program **new_matrix;
-	int x;
-	int y;
+	t_program	**new_matrix;
+	int			x;
+	int			y;
 
 	x = get_width(file_name);
 	y = get_height(file_name);
@@ -71,19 +83,19 @@ t_program **create_coordinates_matrix(char *file_name)
 	return (new_matrix);
 }
 
-t_program **read_map(char *file_name)
+t_program	**read_map(char *file_name)
 {
-	t_program **coordinates_matrix;
-	int y;
-	int fd;
-	char *line;
+	t_program	**coordinates_matrix;
+	int			y;
+	int			fd;
+	char		*line;
 
 	coordinates_matrix = create_coordinates_matrix(file_name);
 	fd = open(file_name, O_RDONLY, 0);
 	if (fd < 0)
 		ft_puterror("Error opening file", -1);
 	y = 0;
-	while ((line = get_next_line_fdf(fd)))
+	while ((line = get_next_line_fdf(fd)) != NULL)
 		fill_matrix_lines(line, coordinates_matrix, y++);
 	free(line);
 	coordinates_matrix[y] = NULL;

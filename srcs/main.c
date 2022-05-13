@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/13 20:42:38 by julcarva          #+#    #+#             */
+/*   Updated: 2022/05/13 21:11:30 by julcarva         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fdf.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_program *mlx;
+	t_program	*mlx;
 
 	if (argc == 2)
 	{
@@ -16,5 +28,5 @@ int main(int argc, char **argv)
 		events(mlx);
 		mlx_loop(mlx->mlx_pointer);
 	}
-	ft_puterror("Error: wrong number of arguments.\n For calling, use ./fdf map.fdf\n", -1);
+	ft_puterror("Usage ./fdf map.fdf\n", -1);
 }
