@@ -1,51 +1,61 @@
 #include "../includes/fdf.h"
 
-void clear_mlx_data(void *ptr)
+int key_press(int keycode, void *param)
 {
-	t_program *data;
+	t_program *fdf;
 
-	if (!ptr)
-		return;
-	data = (t_program *)ptr;
-	clear_matrix(data);
-	if (data->img)
-		mlx_destroy_image(data->img, data->mlx_pointer);
-	if (data->mlx_win)
-		mlx_destroy_window(data->mlx_pointer, data->mlx_win);
-	if (data->mlx_pointer)
-		free(data->mlx_pointer);
-	free(data);
-}
-
-void clear_matrix(void *ptr)
-{
-	t_program *coord;
-	int i;
-
-	if (!ptr)
-		return;
-	coord = (t_program *)ptr;
-	if (coord->z_matrix)
-	{
-		i = 0;
-		while (i < coord->height)
-		{
-			printf("%ls\n", coord->z_matrix[i]);
-			free(coord->z_matrix[i]);
-			i++;
-		}
-		free(coord->z_matrix);
-		coord->z_matrix = NULL;
-	}
-	free(coord);
-}
-
-int key_pressed(int keycode)
-{
+	fdf = (t_program *)param;
 	printf("key code: %d\n", keycode);
-	if (keycode == KEY_ESCAPE) // ESC linux. MAC é 53
-	{
+	if (keycode == 53 || keycode == 65307)
 		exit(0);
+	else if (keycode == 69 || keycode == 43 || keycode == 78 || keycode == 45)
+		zoom(keycode, fdf);
+	else if (keycode == 36 || keycode == 65293)
+	{
+		fdf->zoom = 20;
+		fdf->angle = 0.8;
 	}
 	return (0);
+}
+
+int leave(void)
+{
+	exit(0);
+}
+
+void zoom(int keycode, t_program *fdf)
+{
+	if (keycode == 69 || keycode == 43)
+	{
+		fdf->zoom++;
+		printf("zoom: %f\n", fdf->zoom);
+	}
+	else if (keycode == 78 || keycode == 45)
+		fdf->zoom--;
+	if (fdf->zoom < 1)
+		fdf->zoom = 1;
+	mlx_clear_window(fdf->mlx_pointer, fdf->mlx_win);
+	draw_map(fdf);
+}
+
+void move(int keycode, t_program *data)
+{
+	if (keycode == 65362 || keycode == 126)
+		data->adapt_y -= 10;
+	else if (keycode == 65361 || keycode == 125)
+		data->adapt_y += 10;
+	else if (keycode == 65364 || keycode == 123)
+		data->adapt_x -= 10;
+	else if (keycode == 65363 || keycode == 124)
+		data->adapt_x += 10;
+	reset_window(data);
+}
+
+void events(t_program *fdf)
+{
+	while (1)
+	{
+		mlx_key_hook(fdf->mlx_win, key_press, fdf);
+		mlx_loop(fdf->mlx_pointer);
+	}
 }

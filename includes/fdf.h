@@ -9,13 +9,11 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "../libft/includes/libft.h"
-#include "../libft/includes/get_next_line.h"
 #include "../libft/includes/get_next_line_fdf.h"
 
 #define MAX(a, b) (a > b ? a : b)
 #define WIDTH 1280
 #define HEIGHT 720
-#define KEY_ESCAPE 65307
 #define HEXADECIMAL_BASE "0123456789abcdef"
 #define FT_MIN(A, B) (((A) < (B)) ? (A) : (B))
 #define FT_ABS(X) (((X) < 0) ? (-(X)) : (X))
@@ -26,7 +24,6 @@ typedef struct s_program
 	float y;
 	float z;
 	int color;
-	int is_last_matrix_point;
 
 	/* WINDOW */
 	void *mlx_pointer;
@@ -48,42 +45,40 @@ typedef struct s_program
 	int adapt_x;
 	int adapt_y;
 	float zoom;
-	int is_z_above_30;
-	int is_z_above_20;
 
 	/* COORDINATES */
 	int width;
 	int height;
 	int **z_matrix;
+	struct s_program **matrix;
 } t_program;
 
 /* INIT STRUCTS */
 void init_program(t_program **data, char *file_name);
-void zoom_in(t_program *m0, t_program *m1, t_program *mlx);
-void zoom_out(t_program *m0, t_program *m1, t_program *mlx);
-int apply_color(t_program m0, t_program m1, t_program *mlx);
+int apply_color(t_program m0, t_program m1);
 
 /* FETCHING COORDINATES */
 int get_height(char *file_name);
 int get_width(char *file_name);
-void fill_matrix(int *z_line, char *line);
-void read_file(char *file_name, t_program *coord);
-void check_z_to_get_zoom(t_program *point, t_program *mlx);
+int fill_matrix_lines(char *line, t_program **map_matrix, int y);
+t_program **create_coordinates_matrix(char *file_name);
+t_program **read_map(char *file_name);
 
-/* HOOKS */
-int key_pressed(int keycode);
-int mouse_clicked(int button, int x, int y, t_program *mlx);
+/* HOOKS AND UTILS */
+int key_press(int keycode, void *param);
+int leave(void);
+void reset_window(t_program *fdf);
+void check_malloc(void *ptr);
+void events(t_program *fdf);
+void move(int keycode, t_program *data);
+void zoom(int keycode, t_program *fdf);
 
 /* DRAWING */
 void my_mlx_pixel_put(t_program *data, int x, int y, int color);
 void draw_line(t_program m0, t_program m1, t_program *mlx);
-void draw_map(t_program **coordinates_matrix, t_program *mlx);
+void draw_map(t_program *mlx);
 void clear_mlx_data(void *ptr);
 void clear_matrix(void *ptr);
 void set_parameters(t_program *point, t_program *mlx);
-
-t_program **read_map(char *file_name);
-int fill_matrix_lines(char *line, t_program **matrix_of_dots, int y);
-void check_malloc(void *ptr);
 
 #endif
