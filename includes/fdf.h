@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:42:02 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/14 11:55:19 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/15 22:45:23 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct s_program
 	float				x;
 	float				y;
 	float				z;
-	float				scale;
 	float				zoom;
+	int					zoom_z;
 	int					color;
 	int					bits_per_pixel;
 	int					line_length;
@@ -49,23 +49,24 @@ typedef struct s_program
 	struct s_program	**matrix;
 }	t_program;
 
-t_program	project(t_program p, t_program *mlx);
+t_program	project_point(t_program p, t_program *mlx);
 t_program	**create_coordinates_matrix(char *file_name);
 t_program	**read_map(char *file_name);
-int	get_height(char *file_name);
-int	get_width(char *file_name);
-int	fill_matrix_lines(char *line, t_program **map_matrix, int y);
-int	apply_color(t_program m0, t_program m1);
-int key_press(int keycode, void *param);
-int leave(void);
-void	draw_line(t_program m0, t_program m1, t_program *mlx);
-void	draw_map(t_program *mlx);
-void	init_program(t_program **data, char *file_name);
-void	events(t_program *fdf);
-void zoom(int keycode, t_program *fdf);
-void move(int keycode, t_program *data);
-void flatten(int keycode, t_program *data);
-void	my_mlx_pixel_put(t_program *data, int x, int y, int color);
-void	check_malloc(void *ptr);
+int			get_height(char *file_name);
+int			get_width(char *file_name);
+int			fill_matrix_lines(char *line, t_program **map_matrix, int y);
+int			apply_color(t_program m0, t_program m1);
+void		draw_line(t_program m0, t_program m1, t_program *mlx);
+void		draw_map(t_program *mlx);
+void		init_program(t_program **data, char *file_name);
+int			key_press(int keycode, void *param);
+int			leave_window(void);
+void		events(t_program *fdf);
+void		zoom(int keycode, t_program *fdf);
+void		move(int keycode, t_program *data);
+void		flatten_z(int keycode, t_program *data);
+void		my_mlx_pixel_put(t_program *data, int x, int y, int color);
+void		check_malloc(void *ptr);
+void		print_menu(t_program *data);
 
 #endif

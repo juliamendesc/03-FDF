@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:41:57 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/15 01:51:22 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/15 22:48:59 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,17 @@ static void	isometric_projection(float *x, float *y, int z, t_program *fdf)
 	*y = -z + (previous_x + previous_y) * sin(fdf->angle);
 }
 
-t_program	project(t_program p, t_program *mlx)
+t_program	project_point(t_program p, t_program *mlx)
 {
 	p.x *= mlx->zoom;
 	p.y *= mlx->zoom;
-	// p.z *= mlx->scale;
+	p.z *= mlx->zoom_z;
 
-		// if (mlx->width > 100 || mlx->height >  100 )
-		p.z *= 2 * mlx->scale;
-	// else
-	// 	p.z *= mlx->scale;
-	// // p.z *= mlx->scale;
 	p.x -= mlx->width * mlx->zoom / 2;
 	p.y -= mlx->height * mlx->zoom / 2;
 	isometric_projection(&p.x, &p.y, p.z, mlx);
-	p.x += (WIDTH) / 2;
-	p.y += (HEIGHT + mlx->height * mlx->zoom) / 3;
-	// 	p.x += WIDTH / 1.5 + mlx->adapt_x;
-	// p.y += HEIGHT / 1.5 + mlx->adapt_y;
+	p.x += mlx->adapt_x;
+	p.y += mlx->adapt_y;
 	return (p);
 }
 
@@ -89,6 +82,7 @@ void	draw_map(t_program *mlx)
 	int	x;
 	int	y;
 
+	print_menu(mlx);
 	draw_background(mlx);
 	y = 0;
 	while (y < mlx->height)
@@ -97,11 +91,11 @@ void	draw_map(t_program *mlx)
 		while (x < mlx->width)
 		{
 			if (y != mlx->height - 1)
-				draw_line(project(mlx->matrix[y][x], mlx),
-					project(mlx->matrix[y + 1][x], mlx), mlx);
+				draw_line(project_point(mlx->matrix[y][x], mlx),
+					project_point(mlx->matrix[y + 1][x], mlx), mlx);
 			if (x != mlx->width - 1)
-				draw_line(project(mlx->matrix[y][x], mlx),
-					project(mlx->matrix[y][x + 1], mlx), mlx);
+				draw_line(project_point(mlx->matrix[y][x], mlx),
+					project_point(mlx->matrix[y][x + 1], mlx), mlx);
 			x++;
 		}
 		y++;

@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:41:42 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/15 01:16:17 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/15 22:45:02 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int key_press(int keycode, void *param)
 	else if (keycode == 69 || keycode == 43 || keycode == 78 || keycode == 45)
 		zoom(keycode, fdf);
 	else if (keycode == 109 || keycode == 110)
-		flatten(keycode, fdf);
+		flatten_z(keycode, fdf);
 	else if (keycode == 65362 || keycode == 126 || keycode == 65361 || keycode == 125 || keycode == 65363 || keycode == 123 || keycode == 65364 || keycode == 124)
 		move(keycode, fdf);
 	// else if (keycode == 36 || keycode == 65293)
@@ -31,7 +31,7 @@ int key_press(int keycode, void *param)
 	return (0);
 }
 
-int leave(void)
+int leave_window(void)
 {
 	exit(0);
 }
@@ -39,9 +39,9 @@ int leave(void)
 void zoom(int keycode, t_program *fdf)
 {
 	if (keycode == 69 || keycode == 43)
-		fdf->zoom += 105;
+		fdf->zoom += 1;
 	else if (keycode == 78 || keycode == 45)
-		fdf->zoom -= 5;
+		fdf->zoom -= 1;
 	if (fdf->zoom < 1)
 		fdf->zoom = 1;
 	draw_map(fdf);
@@ -50,21 +50,29 @@ void zoom(int keycode, t_program *fdf)
 void move(int keycode, t_program *data)
 {
 	if (keycode == 65362 || keycode == 126)
-		data->adapt_y -= 10;
-	else if (keycode == 65361 || keycode == 125)
-		data->adapt_x -= 10;
-	else if (keycode == 65364 || keycode == 123)
 		data->adapt_y += 10;
-	else if (keycode == 65363 || keycode == 124)
+	else if (keycode == 65361 || keycode == 125)
 		data->adapt_x += 10;
+	else if (keycode == 65364 || keycode == 123)
+		data->adapt_y -= 10;
+	else if (keycode == 65363 || keycode == 124)
+		data->adapt_x -= 10;
 	draw_map(data);
 }
 
-void flatten(int keycode, t_program *data)
+void flatten_z(int keycode, t_program *data)
 {
 	if (keycode == 109)
-		data->scale += 5;
+		data->zoom_z++;
 	else if (keycode == 110)
-		data->scale -= 5;
+		data->zoom_z--;
 	draw_map(data);
+}
+
+void	print_menu(t_program *data)
+{
+	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 10, 0xffffff, "How to use");
+	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 45, 0xffffff, "Zoom: +/-");
+	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 70, 0xffffff, "Move: Arrows");
+	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 120, 0xffffff, "Flatten: n/m");
 }
