@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 20:42:38 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/13 21:11:30 by julcarva         ###   ########.fr       */
+/*   Created: 2022/05/14 10:32:48 by julcarva          #+#    #+#             */
+/*   Updated: 2022/05/15 23:55:24 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_program	*mlx;
+	t_program *mlx;
 
 	if (argc == 2)
 	{
@@ -23,10 +23,36 @@ int	main(int argc, char **argv)
 			ft_puterror("Error: malloc failed", -1);
 		mlx->matrix = read_map(argv[1]);
 		init_program(&mlx, argv[1]);
-		printf("%f\n", mlx->zoom);
 		draw_map(mlx);
 		events(mlx);
 		mlx_loop(mlx->mlx_pointer);
 	}
-	ft_puterror("Usage ./fdf map.fdf\n", -1);
+	ft_puterror("Usage ./fdf map.fdf", -1);
+}
+
+void	init_program(t_program **data, char *file_name)
+{
+	(*data)->mlx_pointer = mlx_init();
+	(*data)->mlx_win = mlx_new_window((*data)->mlx_pointer, WIDTH, HEIGHT,
+			"FDF");
+	(*data)->img = mlx_new_image((*data)->mlx_pointer, WIDTH, HEIGHT);
+	(*data)->addr = mlx_get_data_addr((*data)->img, &(*data)->bits_per_pixel,
+			&(*data)->line_length, &(*data)->endian);
+	(*data)->width = get_width(file_name);
+	(*data)->height = get_height(file_name);
+	(*data)->adapt_x = WIDTH / 3;
+	(*data)->adapt_y = HEIGHT / 3;
+	(*data)->angle = 0.523599;
+	(*data)->zoom = (WIDTH / HEIGHT) * 10;
+	(*data)->zoom_z = 5;
+}
+
+void	events(t_program *fdf)
+{
+	while (1)
+	{
+		mlx_key_hook(fdf->mlx_win, key_press, fdf);
+		mlx_hook(fdf->mlx_win, 17, 0, leave_window, fdf);
+		mlx_loop(fdf->mlx_pointer);
+	}
 }

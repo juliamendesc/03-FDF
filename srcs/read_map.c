@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:42:40 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/13 21:58:40 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/14 12:00:42 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	get_height(char *file_name)
 
 	fd = open(file_name, O_RDONLY, 0);
 	if (fd == -1)
-		ft_puterror("Error: open failed\n", -1);
+		ft_puterror("Error: open failed", -1);
 	height = 0;
 	while ((line = get_next_line_fdf(fd)) != NULL)
 	{
@@ -40,7 +40,7 @@ int	get_width(char *file_name)
 
 	fd = open(file_name, O_RDONLY, 0);
 	if (fd == -1)
-		ft_puterror("Error: open failed\n", -1);
+		ft_puterror("Error: open failed", -1);
 	line = get_next_line_fdf(fd);
 	width = ft_wdcounter(line, ' ');
 	free(line);
