@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:41:42 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/15 22:45:02 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 00:33:03 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int key_press(int keycode, void *param)
 	t_program *fdf;
 
 	fdf = (t_program *)param;
+	printf("keycode: %d\n", keycode);
 	if (keycode == 53 || keycode == 65307)
 		exit(0);
 	else if (keycode == 69 || keycode == 43 || keycode == 78 || keycode == 45)
@@ -25,6 +26,8 @@ int key_press(int keycode, void *param)
 		flatten_z(keycode, fdf);
 	else if (keycode == 65362 || keycode == 126 || keycode == 65361 || keycode == 125 || keycode == 65363 || keycode == 123 || keycode == 65364 || keycode == 124)
 		move(keycode, fdf);
+	else if (keycode == 113 || keycode == 97 || keycode == 119 || keycode == 115 || keycode == 101 || keycode == 100)
+		rotate(keycode ,fdf);
 	// else if (keycode == 36 || keycode == 65293)
 	// 	fdf->zoom = 20;
 	// fdf->angle = 0.8;
@@ -69,10 +72,19 @@ void flatten_z(int keycode, t_program *data)
 	draw_map(data);
 }
 
-void	print_menu(t_program *data)
+void	rotate(int keycode, t_program *fdf)
 {
-	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 10, 0xffffff, "How to use");
-	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 45, 0xffffff, "Zoom: +/-");
-	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 70, 0xffffff, "Move: Arrows");
-	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 120, 0xffffff, "Flatten: n/m");
+	if (keycode == 113)
+		fdf->alpha += 0.05;
+	else if (keycode == 97)
+		fdf->alpha -= 0.05;
+	else if (keycode == 119)
+		fdf->beta -= 0.05;
+	else if (keycode == 115 )
+		fdf->beta += 0.05;
+	else if (keycode == 101)
+		fdf->gamma += 0.05;
+	else if (keycode == 100 )
+		fdf->gamma -= 0.05;
+	draw_map(fdf);
 }

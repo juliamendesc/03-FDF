@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:42:02 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/15 22:45:23 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 00:32:08 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 
 typedef struct s_program
 {
+	double				alpha;
+	double				beta;
+	double				gamma;
+
+
 	float				x;
 	float				y;
 	float				z;
@@ -65,6 +70,7 @@ void		events(t_program *fdf);
 void		zoom(int keycode, t_program *fdf);
 void		move(int keycode, t_program *data);
 void		flatten_z(int keycode, t_program *data);
+void		rotate(int keycode, t_program *fdf);
 void		my_mlx_pixel_put(t_program *data, int x, int y, int color);
 void		check_malloc(void *ptr);
 void		print_menu(t_program *data);

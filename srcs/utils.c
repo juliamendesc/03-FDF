@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:42:43 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/14 12:00:26 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 00:40:39 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	apply_color(t_program m0, t_program m1)
 {
 	if (m0.z > 300 || m1.z > 300 || m0.z < -300 || m1.z < -300)
 		return (0xee4266);
-	if (m0.z > 0 || m1.z > 0)
+	else if (m0.z > 0 || m1.z > 0)
 		return (0xff9c6d);
-	if (m0.z < 0 || m1.z < 0)
+	else if (m0.z < 0 || m1.z < 0)
 		return (0x3256a8);
 	else
 		return (0xffffff);
