@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:41:49 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/13 22:10:17 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/15 01:18:33 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_program(t_program **data, char *file_name)
 {
-
 	(*data)->mlx_pointer = mlx_init();
 	(*data)->mlx_win = mlx_new_window((*data)->mlx_pointer, WIDTH, HEIGHT,
 			"FDF");

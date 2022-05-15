@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 20:42:38 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/13 21:11:30 by julcarva         ###   ########.fr       */
+/*   Created: 2022/05/14 10:32:48 by julcarva          #+#    #+#             */
+/*   Updated: 2022/05/14 12:00:03 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_program	*mlx;
+	t_program *mlx;
 
 	if (argc == 2)
 	{
@@ -23,10 +23,18 @@ int	main(int argc, char **argv)
 			ft_puterror("Error: malloc failed", -1);
 		mlx->matrix = read_map(argv[1]);
 		init_program(&mlx, argv[1]);
-		printf("%f\n", mlx->zoom);
 		draw_map(mlx);
 		events(mlx);
 		mlx_loop(mlx->mlx_pointer);
 	}
-	ft_puterror("Usage ./fdf map.fdf\n", -1);
+	ft_puterror("Usage ./fdf map.fdf", -1);
+}
+
+void	events(t_program *fdf)
+{
+	while (1)
+	{
+		mlx_key_hook(fdf->mlx_win, key_press, fdf);
+		mlx_loop(fdf->mlx_pointer);
+	}
 }

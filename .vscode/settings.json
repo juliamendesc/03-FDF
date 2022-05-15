@@ -1,10 +1,22 @@
 {
-  "files.associations": {
-    ".sequelizerc": "javascript",
-    ".prettierignore": "ignore",
-    ".lintstagedrc": "json",
-    ".env.*": "env",
-    "fdf.h": "c",
-    "libft.h": "c"
-  }
+	"files.associations": {
+		".sequelizerc": "javascript",
+		".prettierignore": "ignore",
+		".lintstagedrc": "json",
+		".env.*": "env",
+		"fdf.h": "c",
+		"libft.h": "c"
+	},
+	"[c]": {
+		"editor.detectIndentation": false,
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.renderWhitespace": "all",
+		"files.trimTrailingWhitespace": true,
+		"files.insertFinalNewline": true
+	},
+	"prettier.useTabs": true,
+	"prettier.tabWidth": 4,
+	"norminette.command": "norminette",
+	"norminette.fileregex": "^ft.*\\.[ch]$"
 }

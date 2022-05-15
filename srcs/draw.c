@@ -6,38 +6,11 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:41:57 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/13 21:53:04 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/15 01:51:22 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-
-// void set_color(t_program *v, t_program *fdf)
-// {
-// 	int max_z;
-// 	int z;
-
-// 	z = v->z * fdf->scale;
-// 	max_z = fdf->scale * fdf->max_z;
-// 	if (z >= max_z * 1.5)
-// 		v->color = RED;
-// 	else if (z >= max_z)
-// 		v->color = 0xFF9922;
-// 	else if (max_z * 0.8 <= z && z < max_z)
-// 		v->color = 0x999922;
-// 	else if (max_z * 0.6 <= z && z < max_z * 0.8)
-// 		v->color = GREEN;
-// 	else if (max_z * 0.4 <= z && z < max_z * 0.6)
-// 		v->color = 0x229999;
-// 	else if (max_z * 0.2 <= z && z < max_z * 0.4)
-// 		v->color = BLUE;
-// 	else if (0 < z && z < max_z * 0.2)
-// 		v->color = 0x222299;
-// 	else if (z == 0)
-// 		v->color = WHITE;
-// 	else
-// 		v->color = DGREY;
-// }
 
 static void	isometric_projection(float *x, float *y, int z, t_program *fdf)
 {
@@ -54,12 +27,20 @@ t_program	project(t_program p, t_program *mlx)
 {
 	p.x *= mlx->zoom;
 	p.y *= mlx->zoom;
-	p.z *= mlx->zoom / mlx->scale;
+	// p.z *= mlx->scale;
+
+		// if (mlx->width > 100 || mlx->height >  100 )
+		p.z *= 2 * mlx->scale;
+	// else
+	// 	p.z *= mlx->scale;
+	// // p.z *= mlx->scale;
 	p.x -= mlx->width * mlx->zoom / 2;
-	p.y -= mlx->height * mlx->zoom / 3;
+	p.y -= mlx->height * mlx->zoom / 2;
 	isometric_projection(&p.x, &p.y, p.z, mlx);
 	p.x += (WIDTH) / 2;
 	p.y += (HEIGHT + mlx->height * mlx->zoom) / 3;
+	// 	p.x += WIDTH / 1.5 + mlx->adapt_x;
+	// p.y += HEIGHT / 1.5 + mlx->adapt_y;
 	return (p);
 }
 
