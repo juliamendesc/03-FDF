@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:41:42 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/16 11:41:03 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 12:30:30 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_program	project_point(t_program p, t_program *mlx)
 	p.y -= mlx->height * mlx->zoom / 2;
 	if (mlx->is_isometric == 1)
 		isometric_projection(&p.x, &p.y, p.z, mlx);
-	p.x += mlx->adapt_x;
+	p.x += mlx->adapt_x - (WIDTH - MENU_WIDTH) / 2;
 	p.y += mlx->adapt_y;
 	return (p);
 }

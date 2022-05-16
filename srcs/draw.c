@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:41:57 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/16 11:16:50 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 12:04:24 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,20 @@ void	draw_map(t_program *mlx)
 		y++;
 	}
 	mlx_put_image_to_window(mlx->mlx_pointer, mlx->mlx_win, mlx->img, 0, 0);
+	print_menu(mlx);
+}
+
+void	print_menu(t_program *fdf)
+{
+	int		y;
+
+	y = 0;
+	mlx_string_put(fdf->mlx_pointer, fdf->mlx_win, 65, y += 20, 0xEAEAEA, "Functions:");
+	mlx_string_put(fdf->mlx_pointer, fdf->mlx_win, 15, y += 35, 0xEAEAEA, "Zoom: + / -");
+	mlx_string_put(fdf->mlx_pointer, fdf->mlx_win, 15, y += 30, 0xEAEAEA, "Move: Arrows");
+	mlx_string_put(fdf->mlx_pointer, fdf->mlx_win, 15, y += 30, 0xEAEAEA, "Flatten: Q / W");
+	mlx_string_put(fdf->mlx_pointer, fdf->mlx_win, 15, y += 30, 0xEAEAEA, "Rotate: A / S");
+	mlx_string_put(fdf->mlx_pointer, fdf->mlx_win, 15, y += 30, 0xEAEAEA, "Change projection: ");
+	mlx_string_put(fdf->mlx_pointer, fdf->mlx_win, 15, y += 30, 0xEAEAEA, "Z (iso) / X (parallel)");
+
 }

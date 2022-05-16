@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 10:32:48 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/16 11:49:26 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 12:29:05 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	init_program(t_program **data, char *file_name)
 			&(*data)->line_length, &(*data)->endian);
 	(*data)->width = get_width(file_name);
 	(*data)->height = get_height(file_name);
-	(*data)->adapt_x = WIDTH / 3;
-	(*data)->adapt_y = HEIGHT / 3;
+	(*data)->adapt_x = WIDTH - MENU_WIDTH / 2;
+	(*data)->adapt_y = HEIGHT / 2;
 	(*data)->angle = 0.523599;
-	(*data)->zoom = (WIDTH / HEIGHT) * 10;
+	(*data)->zoom = ((WIDTH - MENU_WIDTH) / HEIGHT) * 10;
 	(*data)->zoom_z = 5;
 	(*data)->color = 0xFFFFFF;
 	(*data)->is_isometric = 1;

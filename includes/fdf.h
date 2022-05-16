@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:42:02 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/16 11:49:30 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 12:23:14 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define WIDTH 1920
 # define HEIGHT 1080
+# define MENU_WIDTH 200
 # define HEXADECIMAL_BASE "0123456789abcdef"
 
 # include <stdio.h>
@@ -72,5 +73,6 @@ void		flatten_z(int keycode, t_program *data);
 void		rotate(int keycode, t_program *fdf);
 void		my_mlx_pixel_put(t_program *data, int x, int y, int color);
 void		check_malloc(void *ptr);
+void		print_menu(t_program *fdf);
 
 #endif
