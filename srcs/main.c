@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 10:32:48 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/15 23:55:24 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 11:49:26 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	init_program(t_program **data, char *file_name)
 	(*data)->angle = 0.523599;
 	(*data)->zoom = (WIDTH / HEIGHT) * 10;
 	(*data)->zoom_z = 5;
+	(*data)->color = 0xFFFFFF;
+	(*data)->is_isometric = 1;
 }
 
 void	events(t_program *fdf)

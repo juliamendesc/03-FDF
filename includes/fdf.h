@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:42:02 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/15 22:45:23 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 11:49:30 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,14 @@
 
 typedef struct s_program
 {
+	int					is_isometric;
+
 	float				x;
 	float				y;
 	float				z;
 	float				zoom;
 	int					zoom_z;
 	int					color;
-	int					bits_per_pixel;
-	int					line_length;
-	int					endian;
 	int					adapt_x;
 	int					adapt_y;
 	int					width;
@@ -46,6 +45,9 @@ typedef struct s_program
 	void				*mlx_win;
 	void				*img;
 	char				*addr;
+	int					bits_per_pixel;
+	int					line_length;
+	int					endian;
 	struct s_program	**matrix;
 }	t_program;
 
@@ -61,12 +63,14 @@ void		draw_map(t_program *mlx);
 void		init_program(t_program **data, char *file_name);
 int			key_press(int keycode, void *param);
 int			leave_window(void);
+void		change_projection(int keycode, t_program *fdf);
+void		reset_view(int keycode, t_program **fdf);
 void		events(t_program *fdf);
 void		zoom(int keycode, t_program *fdf);
 void		move(int keycode, t_program *data);
 void		flatten_z(int keycode, t_program *data);
+void		rotate(int keycode, t_program *fdf);
 void		my_mlx_pixel_put(t_program *data, int x, int y, int color);
 void		check_malloc(void *ptr);
-void		print_menu(t_program *data);
 
 #endif

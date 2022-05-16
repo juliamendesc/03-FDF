@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:41:42 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/15 22:45:02 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 11:52:23 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,17 @@ int key_press(int keycode, void *param)
 		exit(0);
 	else if (keycode == 69 || keycode == 43 || keycode == 78 || keycode == 45)
 		zoom(keycode, fdf);
-	else if (keycode == 109 || keycode == 110)
+	else if (keycode == 113 || keycode == 119)
 		flatten_z(keycode, fdf);
 	else if (keycode == 65362 || keycode == 126 || keycode == 65361 || keycode == 125 || keycode == 65363 || keycode == 123 || keycode == 65364 || keycode == 124)
 		move(keycode, fdf);
-	// else if (keycode == 36 || keycode == 65293)
-	// 	fdf->zoom = 20;
-	// fdf->angle = 0.8;
+	else if (keycode == 97 || keycode == 115)
+		rotate(keycode ,fdf);
+	else if (keycode == 122 || keycode == 120)
+		change_projection(keycode, fdf);
+	else if (keycode == 36 || keycode == 65293)
+		reset_view(keycode, &fdf);
 	return (0);
-}
-
-int leave_window(void)
-{
-	exit(0);
 }
 
 void zoom(int keycode, t_program *fdf)
@@ -47,32 +45,33 @@ void zoom(int keycode, t_program *fdf)
 	draw_map(fdf);
 }
 
-void move(int keycode, t_program *data)
+void move(int keycode, t_program *fdf)
 {
 	if (keycode == 65362 || keycode == 126)
-		data->adapt_y += 10;
+		fdf->adapt_y += 10;
 	else if (keycode == 65361 || keycode == 125)
-		data->adapt_x += 10;
+		fdf->adapt_x += 10;
 	else if (keycode == 65364 || keycode == 123)
-		data->adapt_y -= 10;
+		fdf->adapt_y -= 10;
 	else if (keycode == 65363 || keycode == 124)
-		data->adapt_x -= 10;
-	draw_map(data);
+		fdf->adapt_x -= 10;
+	draw_map(fdf);
 }
 
-void flatten_z(int keycode, t_program *data)
+void flatten_z(int keycode, t_program *fdf)
 {
-	if (keycode == 109)
-		data->zoom_z++;
-	else if (keycode == 110)
-		data->zoom_z--;
-	draw_map(data);
+	if (keycode == 113) //q
+		fdf->zoom_z++;
+	else if (keycode == 119) //w
+		fdf->zoom_z--;
+	draw_map(fdf);
 }
 
-void	print_menu(t_program *data)
+void	rotate(int keycode, t_program *fdf)
 {
-	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 10, 0xffffff, "How to use");
-	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 45, 0xffffff, "Zoom: +/-");
-	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 70, 0xffffff, "Move: Arrows");
-	mlx_string_put(data->mlx_pointer, data->mlx_win, 10, 120, 0xffffff, "Flatten: n/m");
+	if (keycode == 115) //s
+		fdf->angle += 0.05;
+	else if (keycode == 97) //a
+		fdf->angle -= 0.05;
+	draw_map(fdf);
 }
