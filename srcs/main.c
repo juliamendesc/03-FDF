@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 10:32:48 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/16 12:29:05 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:29:25 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_program *mlx;
+	t_program	*mlx;
 
 	if (argc == 2)
 	{

@@ -6,13 +6,13 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:41:42 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/16 11:52:23 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:29:44 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-int key_press(int keycode, void *param)
+int	key_press(int keycode, void *param)
 {
 	t_program *fdf;
 
@@ -34,7 +34,7 @@ int key_press(int keycode, void *param)
 	return (0);
 }
 
-void zoom(int keycode, t_program *fdf)
+void	zoom(int keycode, t_program *fdf)
 {
 	if (keycode == 69 || keycode == 43)
 		fdf->zoom += 1;
@@ -45,7 +45,7 @@ void zoom(int keycode, t_program *fdf)
 	draw_map(fdf);
 }
 
-void move(int keycode, t_program *fdf)
+void	move(int keycode, t_program *fdf)
 {
 	if (keycode == 65362 || keycode == 126)
 		fdf->adapt_y += 10;
@@ -58,7 +58,7 @@ void move(int keycode, t_program *fdf)
 	draw_map(fdf);
 }
 
-void flatten_z(int keycode, t_program *fdf)
+void	flatten_z(int keycode, t_program *fdf)
 {
 	if (keycode == 113) //q
 		fdf->zoom_z++;
