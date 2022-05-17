@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:42:43 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/16 12:36:53 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/17 20:08:10 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,11 @@ int	apply_color(t_program m0, t_program m1)
 		return (0xffffff);
 }
 
-
 void	my_mlx_pixel_put(t_program *data, int x, int y, int color)
 {
 	char	*pixel;
 
-	if (x > 0  && x < WIDTH && y > 0 && y < HEIGHT)
+	if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
 	{
 		pixel = data->addr + (y * data->line_length
 				+ x * (data->bits_per_pixel / 8));

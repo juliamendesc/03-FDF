@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:42:40 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/14 12:00:42 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/17 20:24:42 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,15 @@ int	get_height(char *file_name)
 {
 	int		fd;
 	int		height;
-	char	*line;
 
 	fd = open(file_name, O_RDONLY, 0);
 	if (fd == -1)
 		ft_puterror("Error: open failed", -1);
 	height = 0;
-	while ((line = get_next_line_fdf(fd)) != NULL)
+	while (get_next_line_fdf(fd))
 	{
 		height++;
-		free(line);
 	}
-	free(line);
 	close(fd);
 	return (height);
 }
@@ -95,8 +92,12 @@ t_program	**read_map(char *file_name)
 	if (fd < 0)
 		ft_puterror("Error opening file", -1);
 	y = 0;
-	while ((line = get_next_line_fdf(fd)) != NULL)
+	line = get_next_line_fdf(fd);
+	while (line)
+	{
 		fill_matrix_lines(line, coordinates_matrix, y++);
+		line = get_next_line_fdf(fd);
+	}
 	free(line);
 	coordinates_matrix[y] = NULL;
 	close(fd);
