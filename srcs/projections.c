@@ -6,7 +6,7 @@
 /*   By: julcarva <julcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:41:42 by julcarva          #+#    #+#             */
-/*   Updated: 2022/05/17 20:18:52 by julcarva         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:44:59 by julcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	change_projection(int keycode, t_program *fdf)
 {
-	if (keycode == 6)
+	if (keycode == 6 || keycode == 122)
 		fdf->is_isometric = 1;
-	else if (keycode == 7)
+	else if (keycode == 7 || keycode == 120)
 		fdf->is_isometric = 0;
 	draw_map(fdf);
 }
